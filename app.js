@@ -163,5 +163,6 @@ function initAnimations(){
         duration:1,
         ease:"power3.out"
     })
+    //Hero Animation
 }
     
