@@ -102,67 +102,95 @@ if (mobileToggle && mobileMenu) {
         });
     });
 }
-function initLoader(){
+function initLoader() {
     const loader = document.querySelector(".loader");
     const loaderText = document.querySelector(".loader-text");
     const loaderProgress = document.querySelector(".loader-progress");
 
     //Gasp animation loader text
-    gsap.to(loaderText,{
-        opacity:1,
-        duration:0.7,
+    gsap.to(loaderText, {
+        opacity: 1,
+        duration: 0.7,
         ease: "power2.out",
     });
     //Gasp animation loader progress
-    gsap.to(loaderProgress,{
-        width:"100%",
-        duration:2,
-        ease:"power2.inOut",
-        onComplete:()=>{
-            gsap.to(loaderProgress,{
-                opacity:0,
-                duration:0.7,
-                onComplete:()=>{
-                    loader.style.display="none";
-                initAnimations()
+    gsap.to(loaderProgress, {
+        width: "100%",
+        duration: 2,
+        ease: "power2.inOut",
+        onComplete: () => {
+            gsap.to(loaderProgress, {
+                opacity: 0,
+                duration: 0.7,
+                onComplete: () => {
+                    loader.style.display = "none";
+                    initAnimations()
                 }
             })
         }
     });
-    
+
 }
 //Initialize loader on page
-window.addEventListener("load",initLoader);
+window.addEventListener("load", initLoader);
 
 //Custom cursor (only on desktop)
-if(window.innerWidth   < 768){
+if (window.innerWidth < 768) {
     const cursor = document.querySelector('.cursor');
     const cursorFollower = document.querySelector('.cursor-follower');
 
-    document.addEventListener("mousemove",(e)=>{
-        gsap.to(cursor,{
-            x:e.clientX-10,
-            y:e.clientY-10,
-            duration:0.,
+    document.addEventListener("mousemove", (e) => {
+        gsap.to(cursor, {
+            x: e.clientX - 10,
+            y: e.clientY - 10,
+            duration: 0.,
         })
 
-        gsap.to(cursorFollower,{
-            x:e.clientX-20,
-            y:e.clientY-20,
-            duration:0.1,
+        gsap.to(cursorFollower, {
+            x: e.clientX - 20,
+            y: e.clientY - 20,
+            duration: 0.1,
         })
     })
-    
+
 }
 
 // Initialize lall animations
-function initAnimations(){
-    //navbar animation
-    gsap.to("nav",{
-        y:0,
-        duration:1,
-        ease:"power3.out"
-    })
-    //Hero Animation
+function initAnimations() {
+    gsap.to("nav", {
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+
+    const heroTl = gsap.timeline({
+        defaults: {
+            duration: 0.8,
+            ease: "power3.out"
+        }
+    });
+
+    heroTl
+        .to(".hero-title", {
+            opacity: 1,
+            y: 0,
+            duration: 1.2
+        })
+        .to(".hero-subtitle", {
+            opacity: 1,
+            y: 0
+        }, "-=0.8")
+        .to(".hero-description", {
+            opacity: 1,
+            y: 0
+        }, "-=0.5")
+        .to(".cta-btn", {
+            opacity: 1,
+            y: 0
+        }, "-=0.25")
+        .from(".hero-3d-model", {
+            opacity: 0,
+            x: 80,
+            scale: 0.92
+        }, "-=0.2");
 }
-    
