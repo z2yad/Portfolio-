@@ -134,24 +134,34 @@ function initLoader() {
 //Initialize loader on page
 window.addEventListener("load", initLoader);
 
-//Custom cursor (only on desktop)
-if (window.innerWidth < 768) {
+//Custom cursor (only on devices with a real mouse/pointer)
+const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+if (hasFinePointer) {
     const cursor = document.querySelector('.cursor');
     const cursorFollower = document.querySelector('.cursor-follower');
 
-    document.addEventListener("mousemove", (e) => {
-        gsap.to(cursor, {
-            x: e.clientX - 10,
-            y: e.clientY - 10,
-            duration: 0.,
-        })
+    if (cursor && cursorFollower) {
+        document.addEventListener("mousemove", (e) => {
+            gsap.to(cursor, {
+                x: e.clientX - 10,
+                y: e.clientY - 10,
+                duration: 0.05,
+                ease: "power2.out"
+            });
 
-        gsap.to(cursorFollower, {
-            x: e.clientX - 20,
-            y: e.clientY - 20,
-            duration: 0.1,
-        })
-    })
+            gsap.to(cursorFollower, {
+                x: e.clientX - 20,
+                y: e.clientY - 20,
+                duration: 0.18,
+                ease: "power2.out"
+            });
+        });
+    }
+} else {
+    gsap.set(".cursor, .cursor-follower", {
+        display: "none"
+    });
 
 }
 
